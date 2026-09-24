@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="360" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1C1410"/>
+      <stop offset="0.55" stop-color="#2A1C16"/>
+      <stop offset="1" stop-color="#14181C"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="860" y1="40" x2="1140" y2="320" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#E57000" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#E57000" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="line" x1="80" y1="0" x2="520" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#E8A87C"/>
+      <stop offset="1" stop-color="#E8A87C" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="360" rx="28" fill="url(#bg)"/>
+  <circle cx="980" cy="180" r="220" fill="url(#glow)"/>
+  <circle cx="1040" cy="70" r="3" fill="#F6F1EA" fill-opacity="0.7"/>
+  <circle cx="1110" cy="120" r="2" fill="#E8A87C"/>
+  <circle cx="990" cy="250" r="2" fill="#F6F1EA" fill-opacity="0.5"/>
+  <circle cx="900" cy="90" r="1.5" fill="#F6F1EA" fill-opacity="0.45"/>
+  <rect x="72" y="78" width="148" height="6" rx="3" fill="url(#line)"/>
+  <text x="72" y="128" fill="#A89888" font-family="Georgia, 'Times New Roman', serif" font-size="18" letter-spacing="6">A CLOSED-LID HOMELAB</text>
+  <text x="72" y="188" fill="#F6F1EA" font-family="Georgia, 'Times New Roman', serif" font-size="54">Personal Home Server</text>
+  <text x="72" y="232" fill="#E8A87C" font-family="Georgia, 'Times New Roman', serif" font-size="20">Proxmox owns the box. Silo runs the apps. Pi-Hole answers DNS.</text>
+  <g font-family="ui-sans-serif, -apple-system, Segoe UI, sans-serif" font-size="14">
+    <rect x="72" y="268" width="118" height="36" rx="18" fill="#E57000"/>
+    <text x="131" y="291" fill="#1C1410" text-anchor="middle" font-weight="700">Proxmox</text>
+    <rect x="202" y="268" width="108" height="36" rx="18" fill="#F6F1EA" fill-opacity="0.08" stroke="#F6F1EA" stroke-opacity="0.18"/>
+    <text x="256" y="291" fill="#F6F1EA" text-anchor="middle">Files</text>
+    <rect x="322" y="268" width="108" height="36" rx="18" fill="#F6F1EA" fill-opacity="0.08" stroke="#F6F1EA" stroke-opacity="0.18"/>
+    <text x="376" y="291" fill="#F6F1EA" text-anchor="middle">Apps</text>
+    <rect x="442" y="268" width="108" height="36" rx="18" fill="#F6F1EA" fill-opacity="0.08" stroke="#F6F1EA" stroke-opacity="0.18"/>
+    <text x="496" y="291" fill="#F6F1EA" text-anchor="middle">DNS</text>
+  </g>
+</svg>
