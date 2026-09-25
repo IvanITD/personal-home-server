@@ -147,7 +147,7 @@ These organize the library. They live in `/docker/servarr`. Downloads stay off u
 
 ## Names
 
-`silo-vault.duckdns.org` is the public name. An updater keeps it current. The token stays in Notion.
+`silo-vault.duckdns.org` is the public name. An updater keeps it current.
 
 | Hostname | Lands on |
 | --- | --- |
@@ -235,5 +235,5 @@ Samba exports `[data]` and `[docker]`. Guest access is off.
 ---
 
 <p align="center">
-  <img alt="" src="https://img.shields.io/badge/secrets-stay%20in%20Notion-1C1410?style=for-the-badge&labelColor=2A1C16">
+The lid stays down. The library stays up.
 </p>
