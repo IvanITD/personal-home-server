@@ -121,6 +121,14 @@ Docker Compose on Silo, user and group `1000`. Heimdall is the front door. NetBi
 
 Jellyfin’s server name is **Silo Server**. Libraries are `/data/movies` and `/data/shows`, transcoded with Intel Quick Sync. Navidrome plays `/data/music`.
 
+### Photos
+
+| Service | Where | What it does |
+| --- | --- | --- |
+| Immich | Silo | Photo library · `2283` |
+
+Immich keeps its database, cache, and machine-learning containers beside the server. Pictures live in `/data/photos`.
+
 ### The Engines
 
 These organize the library. They live in `/docker/servarr`. Downloads stay off until a VPN subscription exists. Bazarr covers English, Bulgarian, and Greek.
@@ -139,7 +147,6 @@ These organize the library. They live in `/docker/servarr`. Downloads stay off u
 | --- | --- |
 | qBittorrent | A VPN subscription, then it sits behind Gluetun |
 | Gluetun | Same subscription. Proton VPN, Mullvad, or AirVPN |
-| Immich | Photos in `/data/photos` · port `2283` |
 | Nextcloud | A hardware upgrade |
 | WireGuard | NetBird already covers remote access |
 
@@ -185,7 +192,7 @@ The lid stays closed and the machine keeps running. The Intel graphics inside Si
 | Media | 800 GB | `/data` |
 | Docker | 32 GB | `/docker` |
 
-Silo mounts the media share at `/data` and runs Compose from its own `/docker`.
+Silo mounts the media share at `/data` and runs Compose from its own `/docker`. Jellyfin, Navidrome, Sonarr, Radarr, Lidarr, Bazarr, and Immich all bind that path. On 16 Sep 2026 the share was unavailable while Docker created those containers, so they stayed stopped. On 25 Sep the share was healthy again, `docker start` brought them back, and Uptime Kuma returned to green.
 
 ```text
 /data
@@ -193,8 +200,9 @@ Silo mounts the media share at `/data` and runs Compose from its own `/docker`.
 ├── shows
 ├── music
 ├── books
+├── photos
+├── games
 ├── youtube
-├── photos          planned
 └── downloads
 ```
 
@@ -226,7 +234,7 @@ Samba exports `[data]` and `[docker]`. Guest access is off.
 ## Still open
 
 - [ ] qBittorrent and Gluetun, after a VPN subscription
-- [ ] Immich, then photo and video uploads
+- [ ] Upload photos and videos into Immich
 - [ ] Nextcloud, after a hardware upgrade
 - [ ] WireGuard. NetBird already does remote access
 - [ ] Tabby config sync, Mac and Windows
