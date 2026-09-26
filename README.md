@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <img alt="Proxmox" src="https://img.shields.io/badge/Proxmox-VE-E57000?style=flat-square&logo=proxmox&logoColor=white">
+  <img alt="Proxmox" src="https://img.shields.io/badge/Proxmox-VE%209.2-E57000?style=flat-square&logo=proxmox&logoColor=white">
   <img alt="Ubuntu" src="https://img.shields.io/badge/Ubuntu-Server%2026.04-E95420?style=flat-square&logo=ubuntu&logoColor=white">
   <img alt="Docker" src="https://img.shields.io/badge/Docker-Compose-2496ED?style=flat-square&logo=docker&logoColor=white">
   <img alt="Pi-hole" src="https://img.shields.io/badge/Pi--hole-Unbound-96060C?style=flat-square&logo=pihole&logoColor=white">
@@ -30,7 +30,7 @@ It stores the files, plays the movies and music, blocks ads, and stays reachable
 <td width="25%" valign="top">
 
 ### Proxmox
-**Hypervisor**
+**Hypervisor** · VE 9.2
 
 Runs the laptop and the guests.
 
@@ -52,7 +52,7 @@ Mac and Windows both write here.
 ### silo
 **Apps** · VM `101`
 
-Ubuntu Server 26.04. Runs every app.
+Ubuntu Server 26.04, kernel 7.0.0-34. Docker 29.8 runs every app.
 
 64 GB · 2 cores · 4 GB RAM.
 
@@ -62,7 +62,7 @@ Ubuntu Server 26.04. Runs every app.
 ### Pi-Hole
 **DNS** · LXC `102`
 
-Blocks ads for the whole house.
+Pi-hole v6 with Unbound. Blocks ads for the whole house.
 
 1 core · 512 MB RAM · 8 GB disk.
 
@@ -100,9 +100,9 @@ Docker Compose on Silo, user and group `1000`. Heimdall is the front door. NetBi
 
 | Service | Where | What it does |
 | --- | --- | --- |
-| Proxmox VE | host | Runs the guests · `8006` |
+| Proxmox VE 9.2 | host | Runs the guests · `8006` |
 | Samba + wsdd | media | Shares the files · `445` |
-| Pi-Hole | LXC 102 | Blocks ads · `80/admin` |
+| Pi-Hole v6 | LXC 102 | Blocks ads · Core 6.4.3 · Web 6.6 · FTL 6.7.1 · `80/admin` |
 | Unbound | inside Pi-Hole | Resolves DNS · `5335` on localhost |
 | Nginx Proxy Manager | Silo | HTTPS names · `81` |
 | DuckDNS updater | container | Keeps the public name current |
@@ -127,7 +127,7 @@ Jellyfin’s server name is **Silo Server**. Libraries are `/data/movies` and `/
 | --- | --- | --- |
 | Immich | Silo | Photo library · `2283` |
 
-Immich keeps its database, cache, and machine-learning containers beside the server. Pictures live in `/data/photos`.
+Immich v3.2.2 keeps its database, cache, and machine-learning containers beside the server. Pictures live in `/data/photos`. On this two-core VM it can take about fifteen minutes after boot before the server is healthy.
 
 ### The Engines
 
@@ -192,7 +192,9 @@ The lid stays closed and the machine keeps running. The Intel graphics inside Si
 | Media | 800 GB | `/data` |
 | Docker | 32 GB | `/docker` |
 
-Silo mounts the media share at `/data` and runs Compose from its own `/docker`. Jellyfin, Navidrome, Sonarr, Radarr, Lidarr, Bazarr, and Immich all bind that path. On 16 Sep 2026 the share was unavailable while Docker created those containers, so they stayed stopped. On 25 Sep the share was healthy again, `docker start` brought them back, and Uptime Kuma returned to green.
+Silo and Pi-Hole can be snapshotted. Media cannot, because `/data` is directory storage on `mainstorage-hdd`.
+
+Silo mounts the media share at `/data` and runs Compose from its own `/docker`. Jellyfin, Navidrome, Sonarr, Radarr, Lidarr, Bazarr, and Immich all bind that path. On 16 Sep 2026 the share was unavailable while Docker created those containers, so they stayed stopped. On 25 Sep the share was healthy again, `docker start` brought them back, and Uptime Kuma returned to green. On 26 Sep the guests and the host were updated, then the host rebooted. The share was still mounted, so the library apps came back on their own.
 
 ```text
 /data
@@ -228,6 +230,8 @@ Samba exports `[data]` and `[docker]`. Guest access is off.
 <td valign="top">Joined Proxmox, Silo, the iPhone, and the MacBook to NetBird. A route to the house LAN made the usual services work from away.</td>
 </tr>
 </table>
+
+In September the library apps were restored after a dead file share, then Silo, media, Pi-hole, and Proxmox were brought up to date. NetBird on the host and on Silo is 0.79.0.
 
 ---
 
