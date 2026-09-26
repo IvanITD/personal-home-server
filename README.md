@@ -126,7 +126,7 @@ Jellyfin’s server name is **Silo Server**. Libraries are `/data/movies` and `/
 | --- | --- | --- |
 | Immich | Silo | Photo library · `2283` |
 
-Immich v3.2.2 keeps its database, cache, and machine-learning containers beside the server. Pictures live in `/data/photos`. On this two-core VM it can take about fifteen minutes after boot before the server is healthy.
+Immich v3.2.2 keeps its database, cache, and machine-learning containers beside the server. Pictures live in `/data/photos`. On this two-core VM it can take about fifteen minutes after boot before the server is healthy. The admin account is in place, and on 26 Sep 2026 it was signed in from the computer and from the iPhone app. Away from home the phone uses Immich’s DuckDNS name, with camera-roll backup limited to Wi-Fi. Immich reports the whole `/data` disk, about 367 GiB used of 786 GiB. That volume stays at 800 GB while the backup runs, with about 419 GiB still free.
 
 ### The Engines
 
@@ -162,6 +162,7 @@ These organize the library. They live in `/docker/servarr`. Downloads stay off u
 | `jellyseerr.`… | Jellyseerr |
 | `navidrome.`… and `music.`… | Navidrome |
 | `vault.`… | Vaultwarden |
+| Immich’s subdomain | Immich |
 
 Each name is a subdomain of `silo-vault.duckdns.org`. Pi-Hole, with Unbound behind it, is the DNS for the router, the Mac, the Windows PC, and the iPhone.
 
@@ -230,14 +231,14 @@ Samba exports `[data]` and `[docker]`. Guest access is off.
 </tr>
 </table>
 
-In September the library apps were restored after a dead file share, then Silo, media, Pi-hole, and Proxmox were brought up to date. NetBird on the host and on Silo is 0.79.0.
+In September the library apps were restored after a dead file share, then Silo, media, Pi-hole, and Proxmox were brought up to date. NetBird on the host and on Silo is 0.79.0. Immich was signed in from the computer and the iPhone, and the media disk was left at 800 GB.
 
 ---
 
 ## Still open
 
 - [ ] qBittorrent and Gluetun, after a VPN subscription
-- [ ] Upload photos and videos into Immich
+- [ ] iPhone camera-roll backup into Immich, then the older photos and videos
 - [ ] Nextcloud, after a hardware upgrade
 - [ ] WireGuard. NetBird already does remote access
 - [ ] Tabby config sync, Mac and Windows
