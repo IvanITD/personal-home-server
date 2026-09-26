@@ -3,7 +3,6 @@
 </p>
 
 <p align="center">
-  <a href="https://app.notion.com/p/33fd9090f65d806aa174ee4efb92ef08"><img alt="Private notes" src="https://img.shields.io/badge/notes-private%20Notion-1C1410?style=for-the-badge&labelColor=2A1C16"></a>
   <img alt="Timezone" src="https://img.shields.io/badge/timezone-Europe%2FSofia-E8A87C?style=for-the-badge&labelColor=2A1C16">
   <img alt="Reach" src="https://img.shields.io/badge/reach-home%20LAN%20%2B%20NetBird-F6F1EA?style=for-the-badge&labelColor=2A1C16">
 </p>
