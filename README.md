@@ -126,7 +126,7 @@ Jellyfin’s server name is **Silo Server**. Libraries are `/data/movies` and `/
 | --- | --- | --- |
 | Immich | Silo | Photo library · `2283` |
 
-Immich v3.2.2 keeps its database, cache, and machine-learning containers beside the server. Pictures live in `/data/photos`. On this two-core VM it can take about fifteen minutes after boot before the server is healthy. The admin account is in place, and on 26 Sep 2026 it was signed in from the computer and from the iPhone app. Away from home the phone uses Immich’s DuckDNS name, with camera-roll backup limited to Wi-Fi. Immich reports the whole `/data` disk, about 367 GiB used of 786 GiB. That volume stays at 800 GB while the backup runs, with about 419 GiB still free.
+Immich v3.2.2 keeps its database, cache, and machine-learning containers beside the server. Pictures live in `/data/photos`. On this two-core VM it can take about fifteen minutes after boot before the server is healthy, and a large import keeps the website slow until thumbnails are finished. Away from home the phone uses Immich’s DuckDNS name, with camera-roll backup limited to Wi-Fi. On 27 Sep 2026 a Google Photos Takeout was imported: about 21,500 files, 61 GB, with dates and albums. Duplicate copies packed twice in the archive were kept once. A few edited files that had no date metadata were skipped, and some extra copies failed a cleanup delete. The kept copies are in the library. Immich reports the whole `/data` disk. That volume stays at 800 GB. The import added about 61 GB to the 367 GiB already in use.
 
 ### The Engines
 
@@ -231,14 +231,14 @@ Samba exports `[data]` and `[docker]`. Guest access is off.
 </tr>
 </table>
 
-In September the library apps were restored after a dead file share, then Silo, media, Pi-hole, and Proxmox were brought up to date. NetBird on the host and on Silo is 0.79.0. Immich was signed in from the computer and the iPhone, and the media disk was left at 800 GB.
+In September the library apps were restored after a dead file share, then Silo, media, Pi-hole, and Proxmox were brought up to date. NetBird on the host and on Silo is 0.79.0. Immich was signed in, the media disk was left at 800 GB, and a Google Photos Takeout of about 21,500 files was imported.
 
 ---
 
 ## Still open
 
 - [ ] qBittorrent and Gluetun, after a VPN subscription
-- [ ] iPhone camera-roll backup into Immich, then the older photos and videos
+- [ ] iPhone camera-roll backup into Immich
 - [ ] Nextcloud, after a hardware upgrade
 - [ ] WireGuard. NetBird already does remote access
 - [ ] Tabby config sync, Mac and Windows
