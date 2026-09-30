@@ -53,7 +53,7 @@ Mac and Windows both write here.
 
 Ubuntu Server 26.04, kernel 7.0.0-34. Docker 29.8 runs every app.
 
-64 GB · 2 cores · 4 GB RAM.
+64 GB · 2 cores · 6 GB RAM.
 
 </td>
 <td width="25%" valign="top">
@@ -127,6 +127,8 @@ Jellyfin’s server name is **Silo Server**. Libraries are `/data/movies` and `/
 | Immich | Silo | Photo library · `2283` |
 
 Immich v3.2.2 keeps its database, cache, and machine-learning containers beside the server. Pictures live in `/data/photos`. On this two-core VM it can take about fifteen minutes after boot before the server is healthy, and a large import keeps the website slow until thumbnails are finished. Away from home the phone uses Immich’s DuckDNS name, with camera-roll backup limited to Wi-Fi. On 27 Sep 2026 a Google Photos Takeout was imported: about 21,500 files, 61 GB, with dates and albums. Duplicate copies packed twice in the archive were kept once. A few edited files that had no date metadata were skipped, and some extra copies failed a cleanup delete. The kept copies are in the library. Immich reports the whole `/data` disk. That volume stays at 800 GB. The import added about 61 GB to the 367 GiB already in use.
+
+The thumbnail and recognition jobs then filled the 4 GB VM. The kernel stopped Immich for lack of memory, so machine learning was left off until the site answered again. On 29 Sep Silo’s memory was raised to 6 GB. The guest sees about 5.3 GiB. Machine learning came back with the VM, and the unfinished thumbnail, metadata, search, face, duplicate, and text-recognition jobs were run to completion on 30 Sep.
 
 ### The Engines
 
@@ -231,7 +233,7 @@ Samba exports `[data]` and `[docker]`. Guest access is off.
 </tr>
 </table>
 
-In September the library apps were restored after a dead file share, then Silo, media, Pi-hole, and Proxmox were brought up to date. NetBird on the host and on Silo is 0.79.0. Immich was signed in, the media disk was left at 800 GB, and a Google Photos Takeout of about 21,500 files was imported.
+In September the library apps were restored after a dead file share, then Silo, media, Pi-hole, and Proxmox were brought up to date. NetBird on the host and on Silo is 0.79.0. Immich was signed in, the media disk was left at 800 GB, and a Google Photos Takeout of about 21,500 files was imported. Silo’s memory was then raised from 4 GB to 6 GB so Immich could finish thumbnails, search, and face recognition without running out of memory.
 
 ---
 
