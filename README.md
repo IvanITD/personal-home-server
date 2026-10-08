@@ -17,16 +17,16 @@
 
 <p align="center">
 A closed-lid Acer laptop turned into a home server.<br>
-It stores the files, plays the movies and music, blocks ads, and stays reachable away from home.
+It stores the files, plays the movies and music, blocks ads, hosts co-op game nights when needed, and stays reachable away from home.
 </p>
 
 ---
 
-## Four rooms
+## Rooms
 
 <table>
 <tr>
-<td width="25%" valign="top">
+<td width="20%" valign="top">
 
 ### Proxmox
 **Hypervisor** · VE 9.2
@@ -36,7 +36,7 @@ Runs the laptop and the guests.
 `pve-homeserver.local` · port `8006`
 
 </td>
-<td width="25%" valign="top">
+<td width="20%" valign="top">
 
 ### media
 **Files** · LXC `144`
@@ -46,7 +46,7 @@ Holds the library and shares it.
 Mac and Windows both write here.
 
 </td>
-<td width="25%" valign="top">
+<td width="20%" valign="top">
 
 ### silo
 **Apps** · VM `101`
@@ -56,7 +56,7 @@ Ubuntu Server 26.04, kernel 7.0.0-34. Docker 29.8 runs every app.
 64 GB · 2 cores · 6 GB RAM.
 
 </td>
-<td width="25%" valign="top">
+<td width="20%" valign="top">
 
 ### Pi-Hole
 **DNS** · LXC `102`
@@ -66,10 +66,20 @@ Pi-hole v6 with Unbound. Blocks ads for the whole house.
 1 core · 512 MB RAM · 8 GB disk.
 
 </td>
+<td width="20%" valign="top">
+
+### games
+**Game servers** · separate VM
+
+Ubuntu Server 24.04. Synergy / Half-Life 2 co-op when friends play.
+
+64 GB · 2 cores · 2 GB RAM. Start at boot off.
+
+</td>
 </tr>
 </table>
 
-The router is a TP-Link Archer AX23. Silo has the Intel iGPU passed through and OpenSSH on. Tabby on the Mac and the Windows PC has an SSH profile for it.
+The router is a TP-Link Archer AX23. Silo has the Intel iGPU passed through and OpenSSH on. Tabby on the Mac and the Windows PC has SSH profiles for Silo and for the games guest. The games VM is left powered off until a session.
 
 ```mermaid
 flowchart LR
@@ -78,6 +88,7 @@ flowchart LR
   pve --> media[media]
   pve --> silo[silo]
   pve --> dns[Pi-Hole]
+  pve --> games[games]
   media -->|Samba| silo
   dns --> people[Mac · PC · iPhone]
   away([Away]) -->|NetBird| people
@@ -86,6 +97,7 @@ flowchart LR
   style silo fill:#2496ED,stroke:#1C1410,color:#fff
   style media fill:#F6F1EA,stroke:#1C1410,color:#1C1410
   style dns fill:#96060C,stroke:#1C1410,color:#fff
+  style games fill:#3D5A3D,stroke:#1C1410,color:#fff
   style away fill:#F45D01,stroke:#1C1410,color:#1C1410
 ```
 
@@ -150,6 +162,16 @@ These organize the library. They live in `/docker/servarr`. Downloads stay off u
 | Gluetun | Same subscription. Proton VPN, Mullvad, or AirVPN |
 | Nextcloud | A hardware upgrade |
 | WireGuard | NetBird already covers remote access |
+
+### Games
+
+A separate Proxmox guest runs dedicated game servers so Silo stays focused on media and apps. It is Ubuntu Server 24.04, two cores, 2 GB RAM, 64 GB disk, VirtIO networking, Qemu guest agent on, and **Start at boot off** — power it on only for a session.
+
+**Synergy** (Half-Life 2 co-op) is installed with SteamCMD under a dedicated Linux user. Half-Life 2 campaign content is mounted beside the Synergy install so the dedicated server can find the maps. A few Linux library fixes were required before the engine would load (Steam API library from Source SDK 2013 Dedicated Server, Steam client library symlinks, and a library path export when starting). MetaMod and SourceMod are installed; the Synergy save plugin loads, but mid-map save/restore on this Linux build is unreliable, so progress is continued by noting the current map from the server console and starting on that map next time. Early trainstation maps can soft-lock a player at the origin; starting on a later chapter map avoids that.
+
+Local play uses the house LAN. Friends elsewhere can use Synergy’s in-game Internet server browser over Steam networking (fake public address) without opening the game port on the router. A join password is set in the server config. CubeCoders AMP is planned later as a panel once a license is purchased; until then the server is started over SSH and left running in that session.
+
+UptimeRobot watches the public edge of the house so a phone alert fires if the whole box drops offline. Guest OS and Proxmox update visibility for the phone is still open for later.
 
 ---
 
@@ -235,6 +257,8 @@ Samba exports `[data]` and `[docker]`. Guest access is off.
 
 In September the library apps were restored after a dead file share, then Silo, media, Pi-hole, and Proxmox were brought up to date. NetBird on the host and on Silo is 0.79.0. Immich was signed in, the media disk was left at 800 GB, and a Google Photos Takeout of about 21,500 files was imported. Silo’s memory was then raised from 4 GB to 6 GB so Immich could finish thumbnails, search, and face recognition without running out of memory.
 
+In October a **games** VM was added for dedicated game servers. Ubuntu Server 24.04 was installed, SteamCMD pulled Synergy and Half-Life 2 content, and the Linux dedicated server was brought up after the library and content-path fixes above. SourceMod went on for admin tooling. AMP was deferred until a license is bought. External uptime alerts for the house were set up so a phone notice fires if the host disappears.
+
 ---
 
 ## Still open
@@ -245,6 +269,11 @@ In September the library apps were restored after a dead file share, then Silo, 
 - [ ] WireGuard. NetBird already does remote access
 - [ ] Tabby config sync, Mac and Windows
 - [ ] Jellyfin iPhone app
+- [ ] games VM: firewall hardening and a systemd unit so SSH need not stay open
+- [ ] games VM: DHCP reservation for a stable LAN address
+- [ ] CubeCoders AMP for Synergy, after a license
+- [ ] Confirm a remote friend can join via the in-game Internet browser
+- [ ] Phone-friendly view of Proxmox / guest updates (deferred)
 
 ---
 
